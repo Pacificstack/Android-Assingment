@@ -1,0 +1,284 @@
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
+public class teacher {
+
+	static ArrayList<student> st=new ArrayList <student>();
+	
+	public static void main(String[] args)
+	{
+		int ch;
+		Scanner s=new Scanner (System.in);
+		operation obj=new operation();
+		int roll;
+		student s1;
+		do
+		{
+			System.out.println("1.Add a Student");
+			System.out.println("2.Delete a Student");
+			System.out.println("3.Search a Student");
+			System.out.println("4.Failed Student");
+			System.out.println("5.Display");
+			System.out.println("Enter your choice:");
+			ch=s.nextInt();
+			
+			switch(ch)
+			{
+			case 1: s1=obj.addstudent();
+			        st.add(s1);
+			        break;
+			
+			
+			case 2: System.out.println("Enter the roll number to be deleted:");
+			        roll=s.nextInt();
+			        obj.deletestudent(roll);
+			        obj.display();
+			        break;
+			    
+			case 3: System.out.println("Enter the roll number to be searched:");
+	                roll=s.nextInt();
+	                s1=obj.searchstudent(roll);
+	                System.out.println(s1);
+	                break;
+	                
+			case 4: System.out.println("Enter the passing marks:");       
+	                double passingmarks=s.nextDouble();
+	                ArrayList<student> vfail=obj.failedstudents(40);
+			        for(student stud:vfail)
+			        {
+			        	System.out.println(stud);
+			        }
+			        	break;
+			
+			case 5: obj.display();
+			        break;
+			        
+			default: System.out.println("Enter a vaild choice");
+			        	break;
+			        	
+			}
+		}
+			
+            while(ch<=5);
+				
+			
+			
+	}		
+		
+	}
+	
+ class operation {
+	 student addstudent()
+	 {
+		 Scanner sc=new Scanner(System.in);
+		 System.out.println("Enter Roll Number:");
+		 int roll=sc.nextInt();
+		 System.out.println("Enter Name:");
+		 String name=sc.next();
+		 System.out.println("Enter Marks:");
+		 double marks=sc.nextDouble();
+		 student obj=new student(roll,name,marks);
+		 return obj;
+		 
+	 }
+	 
+	 void deletestudent(int roll)
+	 {
+		 for(student s:teacher.st)
+		 {
+			 if(s.roll==roll)
+			 {
+				 teacher.st.remove(teacher.st.indexOf(s));
+				 break;
+			 }
+		 }
+		 }
+	 
+	 student searchstudent(int roll)
+	 {
+		 for(student s:teacher.st)
+		 {
+			 if(s.roll==roll)
+			 {
+				 return s;
+				 
+			 }
+		 } 
+		 
+		 return null;
+		  
+	 }
+	  ArrayList<student> failedstudents(double passingmarks)
+	  {
+		  ArrayList<student> v=new ArrayList<student>();
+		  for(student s:teacher.st)
+		  {
+			  if(s.marks<passingmarks)
+				  v.add(s);
+			  
+		  }
+	         return v;
+	  
+	  }
+	  
+	  void display()
+	  {
+		  for(student s:teacher.st)
+		  {
+			  System.out.println(s);
+			  
+			  
+		  }
+	  }
+	  
+	  
+ }
+
+ 
+ /*
+  1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+1
+Enter Roll Number:
+1
+Enter Name:
+Rutuja
+Enter Marks:
+60
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+1
+Enter Roll Number:
+2
+Enter Name:
+kavya
+Enter Marks:
+75
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+1
+Enter Roll Number:
+3
+Enter Name:
+Renuka
+Enter Marks:
+76
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+1
+Enter Roll Number:
+4
+Enter Name:
+krutika
+Enter Marks:
+82
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+5
+student[rollno =1,name =Rutuja,marks=60.0]
+student[rollno =2,name =kavya,marks=75.0]
+student[rollno =3,name =Renuka,marks=76.0]
+student[rollno =4,name =krutika,marks=82.0]
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+1
+Enter Roll Number:
+5
+Enter Name:
+rahul
+Enter Marks:
+35
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+1
+Enter Roll Number:
+6
+Enter Name:
+rohit
+Enter Marks:
+40
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+5
+student[rollno =1,name =Rutuja,marks=60.0]
+student[rollno =2,name =kavya,marks=75.0]
+student[rollno =3,name =Renuka,marks=76.0]
+student[rollno =4,name =krutika,marks=82.0]
+student[rollno =5,name =rahul,marks=35.0]
+student[rollno =6,name =rohit,marks=40.0]
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+3
+Enter the roll number to be searched:
+4
+student[rollno =4,name =krutika,marks=82.0]
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+4
+Enter the passing marks:
+60
+student[rollno =5,name =rahul,marks=35.0]
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+2
+Enter the roll number to be deleted:
+1
+student[rollno =2,name =kavya,marks=75.0]
+student[rollno =3,name =Renuka,marks=76.0]
+student[rollno =4,name =krutika,marks=82.0]
+student[rollno =5,name =rahul,marks=35.0]
+student[rollno =6,name =rohit,marks=40.0]
+1.Add a Student
+2.Delete a Student
+3.Search a Student
+4.Failed Student
+5.Display
+Enter your choice:
+
+  */

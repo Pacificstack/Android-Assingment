@@ -1,0 +1,20 @@
+package arraylist;
+
+public class student {
+	public int roll;
+	public String name;
+	public double marks;
+	
+	public student(int roll, String name, double marks)
+	{
+		this.roll=roll;
+		this.name=name;
+		this.marks=marks;
+		
+	}
+
+	public String toString()
+	{
+		return "student[rollno ="+ roll +",name =" +name +",marks=" +marks +"]"; 
+	}
+}

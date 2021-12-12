@@ -1,0 +1,192 @@
+package Assignment.Assignment2.bin;
+
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.Scanner;
+public class Client {
+//@SuppressWarnings("unchecked")
+public static void main(String[] args) {
+// TODO Auto-generated method stub
+Scanner sc = new Scanner(System.in);
+try {
+Socket cs = new Socket("127.0.0.1", 1235);
+DataOutputStream dout = new DataOutputStream(cs.getOutputStream());
+DataInputStream din = new DataInputStream(cs.getInputStream());
+ObjectOutputStream oout = new ObjectOutputStream(
+cs.getOutputStream());
+ObjectInputStream oin = new ObjectInputStream(cs.getInputStream());
+int ch;
+String name;
+int rollNo;
+double marks;
+// Student class of Client
+Student st = null;
+while (true) {
+System.out.print("\n***** Select Operation*****\n");
+System.out
+.print("\n\t1. Add Student\n\t2. Delete Student\n\t3. Search Student\n\t4. Failed Student\n\t5. Exit");
+System.out.print("\nEnter choice: ");
+ch = sc.nextInt();
+dout.writeInt(ch);
+switch (ch) {
+case 1:
+System.out.print("\nEnter Roll No - ");
+rollNo = sc.nextInt();
+System.out.print("\nEnter Name - ");
+name = sc.next();
+System.out.print("\nEnter Marks - ");
+marks = sc.nextDouble();
+st = new Student(rollNo, name, marks);
+oout.writeObject(st);
+System.out.print("\nAdded Succesfully " + rollNo + "\nCurrent Students ->" +
+din.readUTF());
+break;
+case 2:
+System.out.print("\nEnter rollNo to be deleted : ");
+rollNo = sc.nextInt();
+dout.writeInt(rollNo);
+System.out.print("\nDeleted Succesfully " +
+rollNo
++ "\nCurrent Students List" +
+din.readUTF());
+break;
+case 3:
+System.out.print("\nEnter rollNo to be searched : ");
+rollNo = sc.nextInt();
+dout.writeInt(rollNo);
+Student s = (Student) oin.readObject();
+if (s != null) {
+System.out.print("\nSearched Student -> " + s);
+} else {
+System.out.println("User not found!!!");
+}
+break;
+case 4:
+System.out.print("\nEnter passing marks : ");
+double pm = sc.nextDouble();
+dout.writeDouble(pm);
+System.out.print("\nFailed List !!!\n" + din.readUTF());
+break;
+}
+if (ch == 5) {
+System.out.println(din.readUTF());
+break;
+}
+}
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+} catch (ClassNotFoundException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+}
+}
+
+
+
+
+
+/****** Select Operation*****
+
+	1. Add Student
+	2. Delete Student
+	3. Search Student
+	4. Failed Student
+	5. Exit
+Enter choice: 1
+
+Enter Roll No - 1
+
+Enter Name - abc
+
+Enter Marks - 19
+
+Added Succesfully 1
+Current Students ->[Student [rollNo=1, name=abc, marks=19.0]]
+***** Select Operation*****
+
+	1. Add Student
+	2. Delete Student
+	3. Search Student
+	4. Failed Student
+	5. Exit
+Enter choice: 1
+
+Enter Roll No - 2
+
+Enter Name - xyz
+
+Enter Marks - 20
+
+Added Succesfully 2
+Current Students ->[Student [rollNo=1, name=abc, marks=19.0], Student [rollNo=2, name=xyz, marks=20.0]]
+***** Select Operation*****
+
+	1. Add Student
+	2. Delete Student
+	3. Search Student
+	4. Failed Student
+	5. Exit
+Enter choice: 1
+
+Enter Roll No - 3
+
+Enter Name - pqr
+
+Enter Marks - 15
+
+Added Succesfully 3
+Current Students ->[Student [rollNo=1, name=abc, marks=19.0], Student [rollNo=2, name=xyz, marks=20.0], Student [rollNo=3, name=pqr, marks=15.0]]
+***** Select Operation*****
+
+	1. Add Student
+	2. Delete Student
+	3. Search Student
+	4. Failed Student
+	5. Exit
+Enter choice: 3
+
+Enter rollNo to be searched : 2
+
+Searched Student -> Student [rollNo=2, name=xyz, marks=20.0]
+***** Select Operation*****
+
+	1. Add Student
+	2. Delete Student
+	3. Search Student
+	4. Failed Student
+	5. Exit
+Enter choice: 4
+
+Enter passing marks : 16
+
+Failed List !!!
+[Student [rollNo=3, name=pqr, marks=15.0]]
+***** Select Operation*****
+
+	1. Add Student
+	2. Delete Student
+	3. Search Student
+	4. Failed Student
+	5. Exit
+Enter choice: 2
+
+Enter rollNo to be deleted : 1
+
+Deleted Succesfully 1
+Current Students List[Student [rollNo=2, name=xyz, marks=20.0], Student [rollNo=3, name=pqr, marks=15.0]]
+***** Select Operation*****
+
+	1. Add Student
+	2. Delete Student
+	3. Search Student
+	4. Failed Student
+	5. Exit
+Enter choice: 5
+Bye Bye Client from server!!! */
